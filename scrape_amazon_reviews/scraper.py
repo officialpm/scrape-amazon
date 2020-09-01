@@ -15,9 +15,6 @@ def get_reviews(product_id: str) -> ModuleType:
     """
     all_reviews_url = construst_reviews_URL(product_id)
     return scrape_reviews(all_reviews_url)
-     
-     
-     
+    
 
-    
-    
+
