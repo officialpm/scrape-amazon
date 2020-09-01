@@ -17,7 +17,13 @@ setuptools.setup(name='scrape_amazon_reviews',
                  keywords=["Amazon", "Scrape", "Reviews", "Scraper"],
                  python_requires='>=3.6',
                  classifiers=[
-                     "Programming Language :: Python :: 3",
-                     "License :: OSI Approved :: MIT License",
-                     "Operating System :: OS Independent",
+                "Operating System :: OS Independent",
+                "Intended Audience :: Developers",
+                "Topic :: Utilities",
+                "Natural Language :: English",
+                "Programming Language :: Python :: 3",
+                "Programming Language :: Python :: 3.6",
+                "Programming Language :: Python :: 3.7",
+                "Programming Language :: Python :: 3.8",
+                "Programming Language :: Python :: 3 :: Only"
                  ], install_requires=['beautifulsoup4', 'pandas', 'tqdm'])
