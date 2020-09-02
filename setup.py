@@ -26,7 +26,7 @@ setuptools.setup(name='scrape_amazon',
                      "Programming Language :: Python :: 3.7",
                      "Programming Language :: Python :: 3.8",
                      "Programming Language :: Python :: 3 :: Only"
-                 ], install_requires=['beautifulsoup4', 'pandas', 'tqdm', 'fake_useragent'],
+                 ], install_requires=['beautifulsoup4', 'pandas', 'p_tqdm', 'fake_useragent'],
                  entry_points={
                      'console_scripts': ['scrape-amazon=scrape_amazon.cli:get_reviews_cli'],
                  }

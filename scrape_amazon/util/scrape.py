@@ -3,8 +3,11 @@ import re
 import pandas as pd
 from .urlFunctions import get_URL
 import math
-from tqdm.auto import tqdm
 
+from multiprocessing.dummy import Pool
+from multiprocessing import cpu_count
+
+from p_tqdm import p_map
 
 def flatten(l): return [item for sublist in l for item in sublist]
 
@@ -54,7 +57,10 @@ def extractPage(url: str) -> str:
         '\n').strip() for i in reviewDescriptions]
     reviewTitles[:] = [i.lstrip('\n').rstrip('\n') for i in reviewTitles]
 
-    return reviewers, ratings, reviewTitles, reviewDescriptions
+    return {"reviewers":reviewers, 
+            "ratings":ratings, 
+            "reviewTitles":reviewTitles, 
+            "reviewDescriptions":reviewDescriptions}
 
 
 def extractTotalPages(url):
@@ -76,29 +82,28 @@ def scrape_reviews(url):
     print(f"[scrape-amazon]  - {pageTitle}")
     print(f"[scrape-amazon] Total Pages - {totalPages}")
     print(f"[scrape-amazon] Total Reviews - {totalReviews}\n")
-    for page in tqdm(range(1, totalPages+1)):
-
+    urlsToFetch =[]
+    for page in range(1, totalPages+1):
         urlToFetch = url+f"?pageNumber={page}"
-        reviewers, ratings, reviewTitles, reviewDescriptions = extractPage(
-            urlToFetch)
-        totalReviewers.append(reviewers)
-        totalRatings.append(ratings)
-        totalReviewDescriptions.append(reviewDescriptions)
-        totalReviewTitles.append(reviewTitles)
+        urlsToFetch.append(urlToFetch)
 
-    totalReviewers = flatten(totalReviewers)
-    totalRatings = flatten(totalRatings)
-    totalReviewDescriptions = flatten(totalReviewDescriptions)
-    totalReviewTitles = flatten(totalReviewTitles)
+    results = p_map(extractPage, urlsToFetch)
+    res = {} 
+    for k in results: 
+        for list in k: 
+            if list in res: 
+                res[list] += (k[list]) 
+            else: 
+                res[list] = k[list] 
 
     productReviewsData = pd.DataFrame()
 
-    # Adding Information
+    # # Adding Information
 
-    productReviewsData["Reviewer"] = totalReviewers
-    productReviewsData["Rating"] = totalRatings
-    productReviewsData["Title"] = totalReviewDescriptions
-    productReviewsData["Description"] = totalReviewDescriptions
+    productReviewsData["Reviewer"] = res['reviewers']
+    productReviewsData["Rating"] = res['ratings']
+    productReviewsData["Title"] = res['reviewTitles']
+    productReviewsData["Description"] = res['reviewDescriptions']
     # productReviewsData["link"] = url
     # productReviewsData["Product Title"] = pageTitle
 
