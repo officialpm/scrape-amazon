@@ -1,6 +1,6 @@
 # scrape-amazon 🚀
 
-[![Downloads](https://img.shields.io/badge/dynamic/json?color=success&label=Dowloads&query=%24.total_downloads&url=https%3A%2F%2Fapi.pepy.tech%2Fapi%2Fv2%2Fprojects%2Fscrape-amazon&style=for-the-badge)](https://github.com/officialpm/scrape-amazon)
+[![Downloads](https://img.shields.io/badge/dynamic/json?color=success&label=Downloads&query=%24.total_downloads&url=https%3A%2F%2Fapi.pepy.tech%2Fapi%2Fv2%2Fprojects%2Fscrape-amazon&style=for-the-badge)](https://github.com/officialpm/scrape-amazon)
 ![](https://img.shields.io/pypi/v/scrape-amazon?label=Version&style=for-the-badge)
 ![](https://img.shields.io/pypi/pyversions/scrape-amazon?style=for-the-badge)
 
