@@ -4,7 +4,7 @@ with open('README.md') as readme_file:
     README = readme_file.read()
 
 setuptools.setup(name='scrape_amazon',
-                 version='0.1.3',
+                 version='0.1.4',
                  description='Scrape Amazon Reviews',
                  url='http://github.com/officialpm/scrape-amazon',
                  author='Parth Maniar',
