@@ -8,7 +8,7 @@
 ## Installation
 
 ```shell
-pip3 install scrape_amazon
+pip3 install scrape-amazon
 ```
 
 ## Example
