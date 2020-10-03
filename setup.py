@@ -28,7 +28,13 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3 :: Only",
     ],
-    install_requires=["beautifulsoup4", "pandas", "p_tqdm", "my_fake_useragent"],
+    install_requires=[
+        "beautifulsoup4",
+        "pandas",
+        "p_tqdm",
+        "my_fake_useragent",
+        "requests",
+    ],
     entry_points={
         "console_scripts": ["scrape-amazon=scrape_amazon.cli:get_reviews_cli"],
     },
