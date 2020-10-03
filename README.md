@@ -3,9 +3,10 @@
 # scrape-amazon 🚀 
 
 [![Downloads](https://img.shields.io/badge/dynamic/json?color=success&label=downloads&query=%24.total_downloads&url=https%3A%2F%2Fapi.pepy.tech%2Fapi%2Fv2%2Fprojects%2Fscrape-amazon&style=flat-square)](https://github.com/officialpm/scrape-amazon)
-![](https://img.shields.io/pypi/v/scrape-amazon?label=version&style=flat-square&color=ffd05b)
-![Versions](https://img.shields.io/pypi/pyversions/scrape-amazon?style=flat-square&color=f58b1b)
+![versions](https://img.shields.io/pypi/v/scrape-amazon?label=version&style=flat-square&color=ffd05b)
+![pyVersions](https://img.shields.io/pypi/pyversions/scrape-amazon?style=flat-square&color=f58b1b)
 ![Stars](https://img.shields.io/github/stars/officialpm/scrape-amazon?color=e6e87d)
+![Forks](https://img.shields.io/github/forks/officialpm/scrape-amazon?color=3efac5)
 ![License](https://img.shields.io/github/license/officialpm/scrape-amazon)
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=officialpm.scrape-amazon)
 
@@ -57,6 +58,8 @@ output_path  output_path for saving (B078BNQ318.csv)
 2     Aparna Uniyal      1      Battery/H ...     I have   ... 
 3     Rahul              5      Great but ...     On the f ... 
 ```
+## Want to contribute?
+To get more information on contributing, go to the 
+[CONTRIBUTING.md](https://github.com/officialpm/scrape-amazon/blob/master/CONTRIBUTING.md)
 
-
-[CODE_OF_CONDUCT.md](https://github.com/officialpm/scrape-amazon/blob/master/CODE_OF_CONDUCT.md)
+Also read the [CODE_OF_CONDUCT.md](https://github.com/officialpm/scrape-amazon/blob/master/CODE_OF_CONDUCT.md)
