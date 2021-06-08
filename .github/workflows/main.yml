@@ -42,8 +42,8 @@ jobs:
         pip install .
     - name: Scrape using CLI
       run: |
-        output=/tmp/B07L11FV3B.csv
-        scrape-amazon in B07L11FV3B $output 
+        output=/tmp/B078BNQ318.csv
+        scrape-amazon in B078BNQ318 $output 
         (test -f $output && echo $output exists) || echo $output does not exist, skipping step
         rm -rf $output
     - name: Install from dist
