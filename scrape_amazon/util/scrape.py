@@ -82,33 +82,34 @@ def extractTotalPages(url):
 
 
 def scrape_reviews(url):
-    totalPages, pageTitle, totalReviews = extractTotalPages(url)
-    print(f"[scrape-amazon]  - {pageTitle}")
-    print(f"[scrape-amazon] Total Pages - {totalPages}")
-    print(f"[scrape-amazon] Total Reviews - {totalReviews}\n")
-    urlsToFetch = []
-    for page in range(1, totalPages + 1):
-        urlToFetch = url + f"?pageNumber={page}"
-        urlsToFetch.append(urlToFetch)
+    if __name__ == '__main__':
+        totalPages, pageTitle, totalReviews = extractTotalPages(url)
+        print(f"[scrape-amazon]  - {pageTitle}")
+        print(f"[scrape-amazon] Total Pages - {totalPages}")
+        print(f"[scrape-amazon] Total Reviews - {totalReviews}\n")
+        urlsToFetch = []
+        for page in range(1, totalPages + 1):
+            urlToFetch = url + f"?pageNumber={page}"
+            urlsToFetch.append(urlToFetch)
 
-    results = p_map(extractPage, urlsToFetch)
-    res = {}
-    for k in results:
-        for list in k:
-            if list in res:
-                res[list] += k[list]
-            else:
-                res[list] = k[list]
+        results = p_map(extractPage, urlsToFetch)
+        res = {}
+        for k in results:
+            for list in k:
+                if list in res:
+                    res[list] += k[list]
+                else:
+                    res[list] = k[list]
 
-    productReviewsData = pd.DataFrame()
+        productReviewsData = pd.DataFrame()
 
-    # # Adding Information
+        # # Adding Information
 
-    productReviewsData["Reviewer"] = res["reviewers"]
-    productReviewsData["Rating"] = res["ratings"]
-    productReviewsData["Title"] = res["reviewTitles"]
-    productReviewsData["Description"] = res["reviewDescriptions"]
-    # productReviewsData["link"] = url
-    # productReviewsData["Product Title"] = pageTitle
+        productReviewsData["Reviewer"] = res["reviewers"]
+        productReviewsData["Rating"] = res["ratings"]
+        productReviewsData["Title"] = res["reviewTitles"]
+        productReviewsData["Description"] = res["reviewDescriptions"]
+        # productReviewsData["link"] = url
+        # productReviewsData["Product Title"] = pageTitle
 
-    return productReviewsData
+        return productReviewsData
