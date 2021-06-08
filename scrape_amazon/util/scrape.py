@@ -81,14 +81,12 @@ def extractTotalPages(url):
     )
 
 
-def scrape_reviews(url, length):
+def scrape_reviews(url):
     totalPages, pageTitle, totalReviews = extractTotalPages(url)
     print(f"[scrape-amazon]  - {pageTitle}")
     print(f"[scrape-amazon] Total Pages - {totalPages}")
     print(f"[scrape-amazon] Total Reviews - {totalReviews}\n")
     urlsToFetch = []
-    if length > -1:
-        totalPages = length
     for page in range(1, totalPages + 1):
         urlToFetch = url + f"?pageNumber={page}"
         urlsToFetch.append(urlToFetch)
