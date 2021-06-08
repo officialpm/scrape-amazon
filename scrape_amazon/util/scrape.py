@@ -1,88 +1,87 @@
-import math
-import re
+if __name__ == '__main__':
+    import math
+    import re
+    import pandas as pd
+    from bs4 import BeautifulSoup
+    from p_tqdm import p_map
 
-import pandas as pd
-from bs4 import BeautifulSoup
-from p_tqdm import p_map
-
-from .urlFunctions import get_URL
-
-
-def flatten(list):
-    return [item for sublist in list for item in sublist]
+    from .urlFunctions import get_URL
 
 
-def get_all_review_page_url(res: str) -> str:
-    productPage = BeautifulSoup(res.text, "html.parser")
-    path: str = productPage.find("a", {"data-hook": "see-all-reviews-link-foot"})[
-        "href"
-    ]
-    return path
+    def flatten(list):
+        return [item for sublist in list for item in sublist]
 
 
-def extractPage(url: str) -> str:
-    r = get_URL(url)
-    pageNotLoaded = True
-    productPage = BeautifulSoup(r.text, "html.parser")
-    checkReviewLen = len(productPage.findAll("i", {"class": "review-rating"}))
-    if checkReviewLen > 0:
-        pageNotLoaded = False
-    while pageNotLoaded:
+    def get_all_review_page_url(res: str) -> str:
+        productPage = BeautifulSoup(res.text, "html.parser")
+        path: str = productPage.find("a", {"data-hook": "see-all-reviews-link-foot"})[
+            "href"
+        ]
+        return path
+
+
+    def extractPage(url: str) -> str:
         r = get_URL(url)
+        pageNotLoaded = True
         productPage = BeautifulSoup(r.text, "html.parser")
         checkReviewLen = len(productPage.findAll("i", {"class": "review-rating"}))
         if checkReviewLen > 0:
             pageNotLoaded = False
-    reviewers = []
-    ratings = []
-    reviewDescriptions = []
-    reviewTitles = []
-    reviewrsSpan = productPage.findAll("span", {"class": "a-profile-name"})
-    ratingsSpan = productPage.findAll("i", {"class": "review-rating"})
-    reviewTitlesSpan = productPage.findAll("a", {"class": "review-title-content"})
-    reviewDescriptionSpan = productPage.findAll(
-        "span", {"class": "review-text-content"}
-    )
+        while pageNotLoaded:
+            r = get_URL(url)
+            productPage = BeautifulSoup(r.text, "html.parser")
+            checkReviewLen = len(productPage.findAll("i", {"class": "review-rating"}))
+            if checkReviewLen > 0:
+                pageNotLoaded = False
+        reviewers = []
+        ratings = []
+        reviewDescriptions = []
+        reviewTitles = []
+        reviewrsSpan = productPage.findAll("span", {"class": "a-profile-name"})
+        ratingsSpan = productPage.findAll("i", {"class": "review-rating"})
+        reviewTitlesSpan = productPage.findAll("a", {"class": "review-title-content"})
+        reviewDescriptionSpan = productPage.findAll(
+            "span", {"class": "review-text-content"}
+        )
 
-    # Loop is initiated from 2 because we have to exclude the Top Positive and
-    # Top Critical Review which otherwise will get repeated.
-    for i in range(2, len(reviewrsSpan)):
-        reviewers.append(reviewrsSpan[i].get_text())
-        ratings.append(int(ratingsSpan[i].get_text()[0]))
+        # Loop is initiated from 2 because we have to exclude the Top Positive and
+        # Top Critical Review which otherwise will get repeated.
+        for i in range(2, len(reviewrsSpan)):
+            reviewers.append(reviewrsSpan[i].get_text())
+            ratings.append(int(ratingsSpan[i].get_text()[0]))
 
-    for i in range(0, len(reviewTitlesSpan)):
-        reviewTitles.append(reviewTitlesSpan[i].get_text())
-        reviewDescriptions.append(reviewDescriptionSpan[i].get_text())
+        for i in range(0, len(reviewTitlesSpan)):
+            reviewTitles.append(reviewTitlesSpan[i].get_text())
+            reviewDescriptions.append(reviewDescriptionSpan[i].get_text())
 
-    reviewDescriptions[:] = [
-        i.lstrip("\n").rstrip("\n").strip() for i in reviewDescriptions
-    ]
-    reviewTitles[:] = [i.lstrip("\n").rstrip("\n") for i in reviewTitles]
+        reviewDescriptions[:] = [
+            i.lstrip("\n").rstrip("\n").strip() for i in reviewDescriptions
+        ]
+        reviewTitles[:] = [i.lstrip("\n").rstrip("\n") for i in reviewTitles]
 
-    return {
-        "reviewers": reviewers,
-        "ratings": ratings,
-        "reviewTitles": reviewTitles,
-        "reviewDescriptions": reviewDescriptions,
-    }
-
-
-def extractTotalPages(url):
-    r = get_URL(url)
-    productPage = BeautifulSoup(r.text, "html.parser")
-    pageSpanText = productPage.findAll(
-        "span", {"class": "a-size-base a-color-secondary"}
-    )[0].get_text()
-    totalReviews = int(re.findall(r"\d+", pageSpanText.replace(",", ""))[0])
-    return (
-        math.ceil(totalReviews / 10),
-        productPage.find("title").get_text(),
-        totalReviews,
-    )
+        return {
+            "reviewers": reviewers,
+            "ratings": ratings,
+            "reviewTitles": reviewTitles,
+            "reviewDescriptions": reviewDescriptions,
+        }
 
 
-def scrape_reviews(url):
-    if __name__ == '__main__':
+    def extractTotalPages(url):
+        r = get_URL(url)
+        productPage = BeautifulSoup(r.text, "html.parser")
+        pageSpanText = productPage.findAll(
+            "span", {"class": "a-size-base a-color-secondary"}
+        )[0].get_text()
+        totalReviews = int(re.findall(r"\d+", pageSpanText.replace(",", ""))[0])
+        return (
+            math.ceil(totalReviews / 10),
+            productPage.find("title").get_text(),
+            totalReviews,
+        )
+
+
+    def scrape_reviews(url):
         totalPages, pageTitle, totalReviews = extractTotalPages(url)
         print(f"[scrape-amazon]  - {pageTitle}")
         print(f"[scrape-amazon] Total Pages - {totalPages}")
