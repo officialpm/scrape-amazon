@@ -5,7 +5,7 @@ from .util.scrape import scrape_reviews
 from .util.urlFunctions import construst_reviews_URL
 
 
-def get_reviews(domain: str, product_id: str, length: int) -> ModuleType:
+def get_reviews(domain: str, product_id: str) -> ModuleType:
     print(f"[INFO] Scraping Reviews of Amazon ProductID - {product_id}")
     """Scraper
     Args:
