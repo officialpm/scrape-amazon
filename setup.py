@@ -5,7 +5,7 @@ with open("README.md", encoding="utf8") as readme_file:
 
 setuptools.setup(
     name="scrape_amazon",
-    version="0.1.7",
+    version="0.1.8",
     description="Scrape Amazon Reviews",
     url="http://github.com/officialpm/scrape-amazon",
     author="Parth Maniar",
@@ -34,6 +34,7 @@ setuptools.setup(
         "p_tqdm",
         "my_fake_useragent",
         "requests",
+        "datefinder"
     ],
     entry_points={
         "console_scripts": ["scrape-amazon=scrape_amazon.cli:get_reviews_cli"],

@@ -27,7 +27,7 @@
 from scrape_amazon import get_reviews
 
 reviews = get_reviews('in','B078BNQ318') #returns dataframe
-#Reviewer, Rating, Title, Description
+#Reviewer, Rating, Title, Description, Date
 ```
 
 ### CLI
@@ -52,11 +52,11 @@ output_path  output_path for saving (B078BNQ318.csv)
 ## Output
 
 ```shell
-        Reviewer       Rating       Title       Description
-0     Parth Maniar       4      Great but ...     I change ... 
-1     Manpreet Singh     3      Delivers  ...     Great ph ... 
-2     Aparna Uniyal      1      Battery/H ...     I have   ... 
-3     Rahul              5      Great but ...     On the f ... 
+        Reviewer       Rating       Title       Description          Date
+0     Parth Maniar       4      Great but ...     I change ...     '05/24/2021, 00:00:00'
+1     Manpreet Singh     3      Delivers  ...     Great ph ...     '05/24/2021, 00:00:00' 
+2     Aparna Uniyal      1      Battery/H ...     I have   ...     '05/24/2021, 00:00:00' 
+3     Rahul              5      Great but ...     On the f ...     '05/24/2021, 00:00:00' 
 ```
 ## Want to contribute?
 To get more information on contributing, go to the 
