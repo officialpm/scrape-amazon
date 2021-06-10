@@ -1,5 +1,6 @@
 import math
 import re
+import datefinder
 import pandas as pd
 from bs4 import BeautifulSoup
 from p_tqdm import p_map
@@ -34,9 +35,11 @@ def extractPage(url: str) -> str:
             pageNotLoaded = False
     reviewers = []
     ratings = []
+    ratingsDate = []
     reviewDescriptions = []
     reviewTitles = []
     reviewrsSpan = productPage.findAll("span", {"class": "a-profile-name"})
+    reviewDate = productPage.findAll("span", {"class": "review-date"})
     ratingsSpan = productPage.findAll("i", {"class": "review-rating"})
     reviewTitlesSpan = productPage.findAll("a", {"class": "review-title-content"})
     reviewDescriptionSpan = productPage.findAll(
@@ -48,6 +51,8 @@ def extractPage(url: str) -> str:
     for i in range(2, len(reviewrsSpan)):
         reviewers.append(reviewrsSpan[i].get_text())
         ratings.append(int(ratingsSpan[i].get_text()[0]))
+        matches = datefinder.find_dates(reviewDate[i].get_text())
+        ratingsDate.append(list(matches)[0].strftime("%m/%d/%Y"))
 
     for i in range(0, len(reviewTitlesSpan)):
         reviewTitles.append(reviewTitlesSpan[i].get_text())
@@ -63,6 +68,7 @@ def extractPage(url: str) -> str:
         "ratings": ratings,
         "reviewTitles": reviewTitles,
         "reviewDescriptions": reviewDescriptions,
+        "date": ratingsDate,
     }
 
 
@@ -107,6 +113,7 @@ def scrape_reviews(url):
     productReviewsData["Rating"] = res["ratings"]
     productReviewsData["Title"] = res["reviewTitles"]
     productReviewsData["Description"] = res["reviewDescriptions"]
+    productReviewsData["Date"] = res["date"]
     # productReviewsData["link"] = url
     # productReviewsData["Product Title"] = pageTitle
 
