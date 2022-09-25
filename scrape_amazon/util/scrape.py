@@ -5,7 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from p_tqdm import p_map
 
-from urlFunctions import get_URL
+from .urlFunctions import get_URL
 
 
 def flatten(list):
