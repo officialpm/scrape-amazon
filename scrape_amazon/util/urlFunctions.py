@@ -1,4 +1,5 @@
 import requests
+import time
 from my_fake_useragent import UserAgent
 
 url_prefix = "https://www.amazon"
@@ -27,10 +28,15 @@ def get_URL(url: str) -> str:
     """
     user_agent = ua.random()
     while True:
-        content: str = requests.get(url, headers={"User-Agent": user_agent})
-        if "api-services-support@amazon.com" in content.text:
-            user_agent = ua.random()
+        # Avoid ConnectionError
+        try:
+            content: str = requests.get(url, headers={"User-Agent": user_agent})
+            if "api-services-support@amazon.com" in content.text:
+                user_agent = ua.random()
+                continue
+            break
+        except:
+            time.sleep(1)
             continue
-        break
-
+        
     return content

@@ -5,7 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from p_tqdm import p_map
 
-from .urlFunctions import get_URL
+from urlFunctions import get_URL
 
 
 def flatten(list):
@@ -42,13 +42,16 @@ def extractPage(url: str) -> str:
     reviewDate = productPage.findAll("span", {"class": "review-date"})
     ratingsSpan = productPage.findAll("i", {"class": "review-rating"})
     reviewTitlesSpan = productPage.findAll("a", {"class": "review-title-content"})
+    reviewTitlesSpan.extend( productPage.findAll("span", {"data-hook":"review-title", "class":"a-size-base review-title a-color-base review-title-content a-text-bold"}) ) # review from other country
     reviewDescriptionSpan = productPage.findAll(
         "span", {"class": "review-text-content"}
     )
 
     # Loop is initiated from 2 because we have to exclude the Top Positive and
     # Top Critical Review which otherwise will get repeated.
-    for i in range(2, len(reviewrsSpan)):
+    # Check if Top critical review exist.
+    topReviewrsSpan = productPage.findAll("h4", {"class": "a-size-medium view-point-title"})
+    for i in range(len(topReviewrsSpan), len(reviewrsSpan)):
         reviewers.append(reviewrsSpan[i].get_text())
         ratings.append(int(ratingsSpan[i].get_text()[0]))
         matches = datefinder.find_dates(reviewDate[i].get_text())
@@ -75,10 +78,11 @@ def extractPage(url: str) -> str:
 def extractTotalPages(url):
     r = get_URL(url)
     productPage = BeautifulSoup(r.text, "html.parser")
+    # Check reviews instead of ratings 
     pageSpanText = productPage.findAll(
-        "span", {"class": "a-size-base a-color-secondary"}
+        "div", {"data-hook" : "cr-filter-info-review-rating-count", "class": "a-row a-spacing-base a-size-base"}
     )[0].get_text()
-    totalReviews = int(re.findall(r"\d+", pageSpanText.replace(",", ""))[0])
+    totalReviews = int(re.findall(r"\d+", pageSpanText.strip().split("ratings")[1].replace(",", ""))[0])
     return (
         math.ceil(totalReviews / 10),
         productPage.find("title").get_text(),
@@ -92,7 +96,8 @@ def scrape_reviews(url):
     print(f"[scrape-amazon] Total Pages - {totalPages}")
     print(f"[scrape-amazon] Total Reviews - {totalReviews}\n")
     urlsToFetch = []
-    for page in range(1, totalPages + 1):
+    # Amazon only display reviews in the first 500 pages
+    for page in range(1, min(totalPages + 1, 500) ):
         urlToFetch = url + f"?pageNumber={page}"
         urlsToFetch.append(urlToFetch)
 
