@@ -22,5 +22,5 @@ def get_reviews_cli() -> ModuleType:
         Scraped Dataframe
     """
     all_reviews_url = construst_reviews_URL(args.domain, args.product_id)
-    reviews = scrape_reviews(all_reviews_url)
+    reviews = scrape_reviews(all_reviews_url, args.domain)
     reviews.to_csv(args.output_path)

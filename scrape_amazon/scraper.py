@@ -14,4 +14,4 @@ def get_reviews(domain: str, product_id: str) -> ModuleType:
         Scraped Dataframe
     """
     all_reviews_url = construst_reviews_URL(domain, product_id)
-    return scrape_reviews(all_reviews_url)
+    return scrape_reviews(all_reviews_url, domain)

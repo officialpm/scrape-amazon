@@ -26,7 +26,7 @@
 ```python
 from scrape_amazon import get_reviews
 
-reviews = get_reviews('in','B078BNQ318') #returns dataframe
+reviews = get_reviews('com','B085BCWJV6') #returns dataframe
 #Reviewer, Rating, Title, Description, Date
 ```
 
@@ -40,13 +40,13 @@ reviews = get_reviews('in','B078BNQ318') #returns dataframe
 #### Positional Arguments:
 ```shell
 domain       Amazon Domain (in/com)
-product_id   product id for scraping (B078BNQ318)
-output_path  output_path for saving (B078BNQ318.csv)
+product_id   product id for scraping (B085BCWJV6)
+output_path  output_path for saving (B085BCWJV6.csv)
 ```
 
 #### Example
 ```shell
-❯ scrape-amazon in B078BNQ318 B078BNQ318.csv
+❯ scrape-amazon com B085BCWJV6 B085BCWJV6.csv
 ```
 
 ## Output
