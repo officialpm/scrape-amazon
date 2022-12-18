@@ -5,7 +5,7 @@ with open("README.md", encoding="utf8") as readme_file:
 
 setuptools.setup(
     name="scrape_amazon",
-    version="0.1.8",
+    version="0.1.9",
     description="Scrape Amazon Reviews",
     url="http://github.com/officialpm/scrape-amazon",
     author="Parth Maniar",
