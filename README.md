@@ -27,7 +27,7 @@
 from scrape_amazon import get_reviews
 
 reviews = get_reviews('com','B085BCWJV6') #returns dataframe
-#Reviewer, Rating, Title, Description, Date
+#SrNo.,Reviewer,ReviewerURL,VerifiedPurchase,HelpfulCount,Rating,Title,Description,Date
 ```
 
 ### CLI
@@ -52,11 +52,16 @@ output_path  output_path for saving (B085BCWJV6.csv)
 ## Output
 
 ```shell
-        Reviewer       Rating       Title       Description          Date
-0     Parth Maniar       4      Great but ...     I change ...     '05/24/2021, 00:00:00'
-1     Manpreet Singh     3      Delivers  ...     Great ph ...     '05/24/2021, 00:00:00' 
-2     Aparna Uniyal      1      Battery/H ...     I have   ...     '05/24/2021, 00:00:00' 
-3     Rahul              5      Great but ...     On the f ...     '05/24/2021, 00:00:00' 
+|SrNo.|Reviewer      |ReviewerURL                                                             |VerifiedPurchase|HelpfulCount|Rating|Title                    |Description        |Date      |
+|:---:|:------------:|:----------------------------------------------------------------------:|:--------------:|:----------:|:----:|:-----------------------:|:-----------------:|:--------:|
+|  0  |  Miss Brea   |https://amazon.com/gp/profile/amzn1.account.AFCGYZNNVKNA4VXFGYO5YTVUUTFA|      YES       |     0      |  5   |          Great          |   I used it ...   |12/10/2022|
+|  1  |Basil Saunders|https://amazon.com/gp/profile/amzn1.account.AE3ZIBJKBIJE3V3ALSXENXCJI6TA|      YES       |     0      |  5   |     Lovely product      | It smooths my ... |12/13/2022|
+|  2  |  Jessie E.   |https://amazon.com/gp/profile/amzn1.account.AETVQOAZ4NOVB23Y6ZXZEAQDQAUQ|      YES       |     5      |  5   |     So easy to ...      |  I make cold...   |10/02/2022|
+|  3  |elizabeth todd|https://amazon.com/gp/profile/amzn1.account.AFGXB32V7ATUEWJJK2IOFU4MZGHQ|      YES       |     0      |  5   |  Amazing cocoa butter   |This Cocoa butter w|11/10/2022|
+|  4  |    PRPro     |https://amazon.com/gp/profile/amzn1.account.AEKBNIYENZ5QUXFTJZFHV2K6XG6Q|      YES       |     8      |  5   |     Great for scars     |There used to ...  |09/07/2022|
+|  5  | Megan Cooper |https://amazon.com/gp/profile/amzn1.account.AHUERNG2V5IUSQ3ZFRLPFAKGE2ZA|      YES       |     0      |  5   |    Good quality but     |The smell is extr..|10/29/2022|
+
+
 ```
 ## Want to contribute?
 To get more information on contributing, go to the 
